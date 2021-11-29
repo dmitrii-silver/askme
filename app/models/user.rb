@@ -9,10 +9,15 @@ class User < ApplicationRecord
 
 	validates :email, :username, presence:true
 	validates :email, :username, uniqueness:true
+	validates :username, length: { maximum: 40, too_long: "is too long (maximum is 40 characters)" }
+	validates :email, format: { with: /[\w\d.]+@[\w\d]+\.[\w]+/,
+    message: "is not email" }
+    validates :username, format: { with: /\A[a-zA-Z0-9_]+\z/,
+    message: "username must be composed uppercase letters, lowercase letters, numbers and symbol _ " }
 
 	attr_accessor :password
 
-	validates_presence_of :password, on: :create
+	validates :password, presence: true, on: :create
 	validates_confirmation_of :password
 
 	before_save :encrypt_password
