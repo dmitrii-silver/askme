@@ -6,7 +6,6 @@ class User < ApplicationRecord
   USERNAME_VALIDATION = /\A\w+\z/
 
   attr_accessor :password
-
   has_many :questions
 
   validates :email, :username, presence:true
@@ -19,6 +18,7 @@ class User < ApplicationRecord
   validates :password, presence: true, on: :create
   validates :password, confirmation: true
 
+  before_validation :username_downcase
   before_save :encrypt_password
 
   # Служебный метод, преобразующий бинарную строку в шестнадцатиричный формат,
@@ -72,5 +72,9 @@ class User < ApplicationRecord
 
     # Оба поля попадут в базу при сохранении (save).
     end
+  end
+
+  def username_downcase
+    username&.downcase!
   end
 end
