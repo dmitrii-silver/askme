@@ -18,7 +18,7 @@ class User < ApplicationRecord
   validates :password, presence: true, on: :create
   validates :password, confirmation: true
 
-  before_validation :username_downcase
+  before_validation :username_downcase, :email_downcase
   before_save :encrypt_password
 
   # Служебный метод, преобразующий бинарную строку в шестнадцатиричный формат,
@@ -76,5 +76,9 @@ class User < ApplicationRecord
 
   def username_downcase
     username&.downcase!
+  end
+
+  def email_downcase
+    email&.downcase!
   end
 end
