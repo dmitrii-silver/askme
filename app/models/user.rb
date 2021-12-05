@@ -74,6 +74,12 @@ class User < ApplicationRecord
     end
   end
 
+  # Служебный метод, преобразующий бинарную строку в шестнадцатиричный формат,
+  # для удобства хранения.
+  def self.hash_to_string(password_hash)
+    password_hash.unpack('H*')[0]
+  end
+
   def username_downcase
     username&.downcase!
   end
