@@ -27,3 +27,5 @@ $(function(){
     return false;
   });
 });
+
+import 'bootstrap/dist/js/bootstrap'
