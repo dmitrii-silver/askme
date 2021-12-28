@@ -6,7 +6,7 @@ class User < ApplicationRecord
   USERNAME_VALIDATION = /\A\w+\z/
 
   attr_accessor :password
-  has_many :questions
+  has_many :questions, dependent: :destroy
 
   validates :email, :username, presence:true
   validates :email, :username, uniqueness:true
@@ -73,13 +73,7 @@ class User < ApplicationRecord
     # Оба поля попадут в базу при сохранении (save).
     end
   end
-
-  # Служебный метод, преобразующий бинарную строку в шестнадцатиричный формат,
-  # для удобства хранения.
-  def self.hash_to_string(password_hash)
-    password_hash.unpack('H*')[0]
-  end
-
+  
   def username_downcase
     username&.downcase!
   end
